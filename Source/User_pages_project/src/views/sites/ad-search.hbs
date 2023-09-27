@@ -1,0 +1,63 @@
+<body>
+    <!-- ...:::: Start Breadcrumb Section:::... -->
+    <div class="breadcrumb-section">
+        <div class="breadcrumb-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div
+                        class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
+                        <h3 class="breadcrumb-title">Advanced search</h3>
+                        <div class="breadcrumb-nav">
+                            <nav aria-label="breadcrumb">
+                                <ul>
+                                    <li><a href="/">Home</a></li>
+                                    <li class="active" aria-current="page">Advanced search</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- ...:::: End Breadcrumb Section:::... -->
+
+    <!-- ...:::: Start Customer Login Section :::... -->
+    <div class="customer_login">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <!--login area start-->
+                <div class="col-lg-6 col-md-6">
+                    <div class="account_form">
+                        <form action="/products-list/advanced-searched" method="GET">
+                            <div class="default-form-box mb-4">
+                                <label>Book tittle</label>
+                                <input type="text" placeholder="Type the name of book..." name="title">
+                            </div>
+                            <div class="default-form-box mb-4">
+                                <label>Author</label>
+                                <input type="text" placeholder="Type the author of book..." name="author">
+                            </div>
+                            <div class="default-form-box mb-4">
+                                <label>Release year</label>
+                                <div class="d-flex">
+                                    <input class="mr-3" type="number" placeholder="Oldest..." name="old_year" min="1500"
+                                        max="2100">
+                                    <input type="number" placeholder="Newest..." name="new_year" min="1500" max="2100">
+                                </div>
+                            </div>
+                            <div class="default-form-box mb-4">
+                                <label>Publisher</label>
+                                <input type="text" placeholder="Type the company published the book..."
+                                    name="publisher">
+                            </div>
+                            <div class="login_submit d-flex justify-content-center">
+                                <button type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--login area start-->
+            </div>
+        </div>
+    </div> <!-- ...:::: End Customer Login Section :::... -->
+</body>

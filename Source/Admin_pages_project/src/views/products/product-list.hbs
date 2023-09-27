@@ -1,0 +1,310 @@
+<body data-sidebar="dark">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                                <h4 class="mb-0">Products</h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                                        <li class="breadcrumb-item active">Products</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-3">
+                            <div class="card">
+                                <div class="card-header bg-transparent border-bottom">
+                                    <h5 class="mt-2 mb-2 font-size-16">CATEGORIES</h5>
+                                    <form method="GET" action="/products/product-categorized">
+                                        <select class="form-control" name="category" id="category"
+                                            onchange="this.form.submit()">
+                                            {{#select categoryStatus}}
+                                            <option value="all">All</option>
+                                            <option value="English learning">English learning</option>
+                                            <option value="Self-help">Self-help</option>
+                                            <option value="Business">Business</option>
+                                            <option value="Short stories">Short stories</option>
+                                            <option value="Long story">Long story</option>
+                                            <option value="Information Technology">Information Technology</option>
+                                            <option value="Manga">Manga</option>
+                                            {{/select}}
+                                        </select>
+                                    </form>
+                                </div>
+
+                                <div class="card-header bg-transparent border-bottom">
+                                    <h5 class="mt-4 font-size-16">FILTER</h5>
+                                    <form method="GET" action="/products/product-filtered">
+                                        <div class="card-body border-top">
+                                            <div>
+                                                <h5 class="font-size-14 mb-2">Price range <span>(x1000 VNĐ)</span></h5>
+                                                <div class="d-flex justify-content-between">
+                                                    {{#if filterStatus}}
+                                                    <input class="col-5 form-control" type="number" id="min_price"
+                                                        name="min_price" placeholder="Min price..." min="0" max="1000"
+                                                        value="{{filterStatus.min_price}}">
+                                                    <input class="col-5 form-control" type="number" id="max_price"
+                                                        name="max_price" placeholder="Max price..." min="0" max="1000"
+                                                        value="{{filterStatus.max_price}}">
+                                                    {{else}}
+                                                    <input class="col-5 form-control" type="number" id="min_price"
+                                                        name="min_price" placeholder="Min price..." min="0" max="1000"
+                                                        value="0">
+                                                    <input class="col-5 form-control" type="number" id="max_price"
+                                                        name="max_price" placeholder="Max price..." min="0" max="1000"
+                                                        value="1000">
+                                                    {{/if}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="custom-accordion">
+                                            <div class="card-body border-top">
+                                                <div>
+                                                    <h5 class="font-size-14 mb-2">Authors </h5>
+                                                    <select class="form-control" name="author" id="author">
+                                                        {{#select filterStatus.author}}
+                                                        <option value="all">All</option>
+                                                        {{#each authorsList}}
+                                                        <option value="{{author}}">{{author}}</option>
+                                                        {{/each}}
+                                                        {{/select}}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-body border-top">
+                                                <div>
+                                                    <h5 class="font-size-14 mb-2">Publishers </h5>
+                                                    <select class="form-control" name="publisher" id="publisher">
+                                                        {{#select filterStatus.publisher}}
+                                                        <option value="all">All</option>
+                                                        {{#each publishersList}}
+                                                        <option value="{{publisher}}">{{publisher}}</option>
+                                                        {{/each}}
+                                                        {{/select}}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-body border-top">
+                                                <div>
+                                                    <h5 class="font-size-14 mb-2">Languages </h5>
+                                                    <select class="form-control" name="language" id="language">
+                                                        {{#select filterStatus.language}}
+                                                        <option value="all">All</option>
+                                                        <option value="English">English</option>
+                                                        <option value="Vietnamese">Vietnamese</option>
+                                                        {{/select}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center mb-2">
+                                            <button class="btn btn-primary" type="submit">Filter</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-8 col-md-9">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <h5>Books</h5>
+                                                    <p>Show {{firstIndex}} - {{lastIndex}} of {{count}} results
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <div class="form-inline float-md-right">
+                                                    <form method="GET" action="/products/products-searched">
+                                                        <input type="text" class="form-control rounded" name="search"
+                                                            placeholder="Search...">
+                                                        <button class="btn btn-primary" type="submit">
+                                                            <i class="mdi mdi-magnify"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="form-inline float-md-right mr-2">
+                                                    <a href="/products/add-product" class="btn btn-primary mb-2"><i
+                                                            class="mdi mdi-plus mr-2"></i> Add Product</a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row col-12 no-gutters d-flex flex-wrap">
+                                            {{#each books}}
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <div class="product-box">
+                                                    <div class="product-img">
+                                                        <div class="product-ribbon badge badge-info">
+                                                            -20%
+                                                        </div>
+                                                        <div class="product-like">
+                                                            <a href="#"
+                                                                class="btn d-flex align-items-center justify-content-center waves-effect"
+                                                                data-id="{{book_id}}" data-toggle="modal"
+                                                                data-target="#Delete-Modal-Center">
+                                                                <i class="mdi mdi-trash-can-outline"></i>
+                                                            </a>
+                                                        </div>
+                                                        <a href="/products/product-edit?ID={{book_id}}">
+                                                            <img src="{{img_url}}" alt=""
+                                                                class="img-fluid mx-auto d-block">
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="text-center mt-2">
+                                                        <h5 class="font-size-17">
+                                                            <a href="/products/product-edit?ID={{book_id}}"
+                                                                class="text-primary">{{title}}</a>
+                                                        </h5>
+                                                        <div class="d-flex justify-content-center mt-3">
+                                                            <h5 class="font-size-16 text-muted mr-2">
+                                                                <del>{{origin_price}}đ</del>
+                                                            </h5>
+                                                            <h5 class="font-size-16 text-danger">{{price}}đ</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{/each}}
+                                        </div>
+
+                                        <div class="row mt-4">
+                                            <div class="col-sm-12">
+                                                <p class="mb-sm-0 mt-2">Page <span
+                                                        class="font-weight-bold">{{page}}</span>
+                                                    of <span class="font-weight-bold">{{lastPage}}</span></p>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="float-sm-right">
+                                                    <ul class="pagination pagination-rounded mb-sm-0">
+                                                        {{#if isPreValid}}
+                                                        <li class="page-item">
+                                                            <a href="{{path}}1" class="page-link"><i
+                                                                    class="mdi mdi-chevron-double-left"></i></a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a href="{{path}}{{prePage}}" class="page-link"><i
+                                                                    class="mdi mdi-chevron-left"></i></a>
+                                                        </li>
+                                                        {{else}}
+                                                        <li class="page-item disabled">
+                                                            <a href="{{path}}1" class="page-link"><i
+                                                                    class="mdi mdi-chevron-double-left"></i></a>
+                                                        </li>
+                                                        <li class="page-item disabled">
+                                                            <a href="{{path}}{{prePage}}" class="page-link"><i
+                                                                    class="mdi mdi-chevron-left"></i></a>
+                                                        </li>
+                                                        {{/if}}
+
+                                                        <li class="page-item active">
+                                                            <a href="#" class="page-link">{{page}}</a>
+                                                        </li>
+
+                                                        {{#if isNextValid}}
+                                                        <li class="page-item">
+                                                            <a href="{{path}}{{nextPage}}" class="page-link"><i
+                                                                    class="mdi mdi-chevron-right"></i></a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a href="{{path}}{{lastPage}}" class="page-link"><i
+                                                                    class="mdi mdi-chevron-double-right"></i></a>
+                                                        </li>
+                                                        {{else}}
+                                                        <li class="page-item disabled">
+                                                            <a href="{{path}}{{nextPage}}" class="page-link"><i
+                                                                    class="mdi mdi-chevron-right"></i></a>
+                                                        </li>
+                                                        <li class="page-item disabled">
+                                                            <a href="{{path}}{{lastPage}}" class="page-link"><i
+                                                                    class="mdi mdi-chevron-double-right"></i></a>
+                                                        </li>
+                                                        {{/if}}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end row -->
+
+                </div> <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © Nazox.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-right d-none d-sm-block">
+                                Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+</body>
+
+<form name="delete-product-form" method="POST"></form>
+<!-- Confirm Delete Product -->
+<div class="modal fade" id="Delete-Modal-Center" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirm delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this book ?
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-product" type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/custom_js/products-delete.js"></script>

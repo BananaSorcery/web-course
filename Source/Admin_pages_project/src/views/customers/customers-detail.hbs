@@ -1,0 +1,187 @@
+<body data-sidebar="dark">
+    <!-- Begin page -->
+
+    <div id="layout-wrapper">
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 d-flex flex-wrap">
+                            <div class="col-sm-12 col-xl-3">
+                                <div class="card">
+                                    <div class="d-flex justify-content-center mt-4">
+                                        <img class="rounded-circle" src="{{customer.avatar_url}}" alt="Card image cap"
+                                            width="100px" height="100px">
+                                    </div>
+                                    <div class="card-body d-flex flex-column align-items-center">
+                                        <h3 class="card-title mt-0">{{customer.full_name}}</h3>
+                                        <a href="#">{{customer.email}}</a>
+                                        <p>{{customer.phone_number}}</p>
+                                    </div>
+                                    <ul class="list-group list-group-flush text-center">
+                                        <li class="list-group-item">
+                                            <h6 class="font-size-14">Last order</h6>
+                                            {{#if orders}}
+                                            <span class="text-primary">#{{customer.lastOrder.ID}}</span>
+                                            {{else}}
+                                            <span>None</span>
+                                            {{/if}}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="font-size-14">Average Spent</h6>
+                                            {{#if orders}}
+                                            <span>{{customer.averageSpent}}đ</span>
+                                            {{else}}
+                                            <span>None</span>
+                                            {{/if}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-xl-9">
+                                <div class="row card">
+                                    <div class="d-flex justify-content-between mt-4 ml-4 mr-4">
+                                        <h5>Recently orders</h5>
+                                        {{#if totalSpent}}
+                                        <p> Total spent {{totalSpent}}đ on {{totalOder}} orders</p>
+                                        {{/if}}
+                                    </div>
+                                    <div class="table-responsive p-4">
+                                        <table class="table table-striped mb-0 text-center">
+                                            <thead class="thead-dark">
+                                                <th>Order ID</th>
+                                                <th>Order date</th>
+                                                <th>Status</th>
+                                                <th>Final cost</th>
+                                            </thead>
+                                            {{#if orders}}
+                                            <tbody>
+                                                {{#each orders}}
+                                                <tr>
+                                                    <th scope="row"><a
+                                                            href="/orders/orders-detail?order_id={{order_id}}">#{{order_id}}</a>
+                                                    </th>
+                                                    <td style="max-width:270px;">{{order_date}}</td>
+                                                    <td>
+                                                        <div class="badge 
+                                                        {{#switch delivery_status}}
+                                                            {{#case 'Packed'}} badge-soft-warning {{/case}}
+                                                            {{#case 'In transit'}} badge-soft-primary {{/case}}
+                                                            {{#case 'Chargeback'}} badge-soft-danger {{/case}}
+                                                            {{#case 'Delivered'}} badge-soft-success {{/case}}
+                                                        {{/switch}}
+                                                        font-size-12">
+                                                            {{delivery_status}}</div>
+                                                    </td>
+                                                    <td>{{final_cost}}đ</td>
+                                                </tr>
+                                                {{/each}}
+                                                {{else}}
+                                                <tr>
+                                                    <td colspan="4" class="text-center">
+                                                        This user has not had any orders yet!
+                                                    </td>
+                                                </tr>
+                                                {{/if}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {{#if path}}
+                                    <div class="row d-flex justify-content-center pb-3">
+                                        <ul class="pagination pagination-rounded mb-sm-0">
+                                            {{#if isPreValid}}
+                                            <li class="page-item">
+                                                <a href="{{path}}1" class="page-link"><i
+                                                        class="mdi mdi-chevron-double-left"></i></a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a href="{{path}}{{prePage}}" class="page-link"><i
+                                                        class="mdi mdi-chevron-left"></i></a>
+                                            </li>
+                                            {{else}}
+                                            <li class="page-item disabled">
+                                                <a href="{{path}}1" class="page-link"><i
+                                                        class="mdi mdi-chevron-double-left"></i></a>
+                                            </li>
+                                            <li class="page-item disabled">
+                                                <a href="{{path}}{{prePage}}" class="page-link"><i
+                                                        class="mdi mdi-chevron-left"></i></a>
+                                            </li>
+                                            {{/if}}
+
+                                            <li class="page-item active">
+                                                <a href="#" class="page-link">{{page}}</a>
+                                            </li>
+
+                                            {{#if isNextValid}}
+                                            <li class="page-item">
+                                                <a href="{{path}}{{nextPage}}" class="page-link"><i
+                                                        class="mdi mdi-chevron-right"></i></a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a href="{{path}}{{lastPage}}" class="page-link"><i
+                                                        class="mdi mdi-chevron-double-right"></i></a>
+                                            </li>
+                                            {{else}}
+                                            <li class="page-item disabled">
+                                                <a href="{{path}}{{nextPage}}" class="page-link"><i
+                                                        class="mdi mdi-chevron-right"></i></a>
+                                            </li>
+                                            <li class="page-item disabled">
+                                                <a href="{{path}}{{lastPage}}" class="page-link"><i
+                                                        class="mdi mdi-chevron-double-right"></i></a>
+                                            </li>
+                                            {{/if}}
+                                        </ul>
+                                    </div>
+                                    {{/if}}
+                                </div>
+                                {{#if customer.recentAddress}}
+                                <div class="row card">
+                                    <div class="d-flex mt-3 ml-4 mr-4">
+                                        <h5>Recently delivery addresses</h5>
+                                    </div>
+                                    <div class="ml-4 mr-4">
+                                        <ul class="list-group list-group-flush">
+
+                                            <li class="list-group-item">
+                                                <h6 class="font-size-14">{{customer.recentAddress.name}}</h6>
+                                                <span>{{customer.recentAddress.address}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                {{/if}}
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </div> <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © Nazox.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-right d-none d-sm-block">
+                                Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+</body>

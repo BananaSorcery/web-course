@@ -1,0 +1,161 @@
+<body data-sidebar="dark">
+    <!-- Begin page -->
+
+    <div id="layout-wrapper">
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 d-flex flex-wrap">
+
+                            <div class="col-sm-12 col-xl-9">
+                                <div class="row card">
+                                    <div class="d-flex mt-3 ml-4 mr-4">
+                                        <h5>Order #{{orderInfo.order_id}}</h5>
+                                    </div>
+                                    <div class="ml-4 mr-4">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex justify-content-between mb-2">
+                                                <span class="text-center">
+                                                    <h6 class="font-size-14">Ordered date: </h6>
+                                                    <span>{{orderInfo.order_date}}</span>
+                                                </span>
+                                                <span class="text-center">
+                                                    <h6 class="font-size-14">Number books: </h6>
+                                                    <span>{{orderInfo.items_number}}</span>
+                                                </span>
+                                                <span class="text-center">
+                                                    <h6 class="font-size-14">Arrived date: </h6>
+                                                    <span>{{orderInfo.expected_arriving_time}}</span>
+                                                </span>
+                                                <span class="text-center">
+                                                    <h6 class="font-size-14">Delivery status: </h6>
+                                                    <span class="badge {{#switch orderInfo.delivery_status}}
+                                                            {{#case 'Packed'}} badge-soft-warning {{/case}}
+                                                            {{#case 'In transit'}} badge-soft-primary {{/case}}
+                                                            {{#case 'Chargeback'}} badge-soft-danger {{/case}}
+                                                            {{#case 'Delivered'}} badge-soft-success {{/case}}
+                                                        {{/switch}}">{{orderInfo.delivery_status}}</span>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row card">
+                                    <div class="d-flex justify-content-between mt-4 ml-4 mr-4">
+                                        <h5>Orders items</h5>
+                                        <p>Order will be delivery for multiple times</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-centered mb-0 table-nowrap">
+                                                <thead class="bg-light">
+                                                    <tr class="text-center">
+                                                        <th style="width: 120px">Image</th>
+                                                        <th style="word-wrap: break-word; max-width: 200px;">Book title
+                                                        </th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {{#each orderItems}}
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <img src="{{[book.images.img_url]}}" alt="product-img"
+                                                                title="product-img" class="avatar-md" />
+                                                        </td>
+                                                        <td style="word-wrap: break-word; max-width: 200px;">
+                                                            <h5 class="font-size-14 text-truncate"><a
+                                                                    href="ecommerce-product-detail.html"
+                                                                    class="text-dark">{{[book.title]}}</a></h5>
+                                                        </td>
+                                                        <td class="text-center"> {{[book.price]}} đ </td>
+                                                        <td class="text-center"> {{items_quantity}} </td>
+                                                        <td class="text-center"> {{total_price}} đ </td>
+                                                    </tr>
+                                                    {{/each}}
+                                                    <tr class="bg-light text-right">
+                                                        <th scope="row" colspan="4"> Sub Total : </th>
+                                                        <td> {{orderInfo.total_cost}} đ</td>
+                                                    </tr>
+                                                    <tr class="bg-light text-right">
+                                                        <th scope="row" colspan="4"> Shipping Charge : </th>
+                                                        <td> {{orderInfo.shipping_fee}} đ</td>
+                                                    </tr>
+                                                    <tr class="bg-light text-right">
+                                                        <th scope="row" colspan="4"> Total : </th>
+                                                        <td> {{orderInfo.final_cost}} đ</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-xl-3">
+                                <div class="card">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <h5>Customer</h5>
+
+                                            <div class=" card-body d-flex justify-content-center align-items-center">
+                                                <img class="rounded-circle"
+                                                    src="{{orderInfo.[customer_username_user.avatar_url]}}"
+                                                    alt="Card image cap" width="45" height="45">
+                                                <div class="ml-3">
+                                                    <h5 class="font-size-16">
+                                                        {{orderInfo.[customer_username_user.full_name]}}</h5>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>Contact person</h5>
+                                            <div class="card-body">
+                                                <h3 class="card-title">{{orderInfo.[customer_username_user.full_name]}}
+                                                </h3>
+                                                <a href="#">{{orderInfo.[customer_username_user.email]}}</a>
+                                                <p class="mt-1">{{orderInfo.[customer_username_user.phone_number]}}</p>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>Shipping & Billing address</h5>
+                                            <div class="card-body">
+                                                <p>{{orderInfo.[customer_username_user.address]}}</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </div> <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © Nazox.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-right d-none d-sm-block">
+                                Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+</body>
